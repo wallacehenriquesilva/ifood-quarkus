@@ -1,0 +1,12 @@
+[
+  {
+    "id": 123,
+    "nome": "Restaurante 1",
+    "proprietario": "Wallace"
+  },
+  {
+    "id": 124,
+    "nome": "Restaurante 2",
+    "proprietario": "Isabela"
+  }
+]

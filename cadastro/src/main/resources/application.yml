@@ -1,0 +1,81 @@
+"%local":
+  mp:
+    jwt:
+      verify:
+        issuer: http://localhost:8180/auth/realms/ifood #Endereço do nosso realm, em quem confiamos para criar o token
+        publickey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/XweeH4wTNuBQqpD/BqeuuNHTLrC3lCrgp2DXBoKPwahj+uuR5XI0Thb2jViMs4ZsNYtuaGgfBHTwUKTlstaGDwcJeUmwrDveiz29QO2XSjls8ILj4qqAIj861ZyLpz7u7g+4WBROxdTiC6ia0x3le8SSXVvRHRHz7Qd0EGeMUYW6PfpHV3NeUzVa2AWrLQScS9xyMvd+Djj0YGAjE7pM1MlpmEm8fG3gvPyVCyyGOw+l1PQt0SWBWjEXX88d31rUf+kijNLfKfLVbOJmbUpIIWMIjRmwWU6IT8xEaitc7HO7+3GLP8JBgyfn7ONzBB/XDsRxZkUmM0JDO4DmJ53QIDAQAB #Chave publica do healm
+
+  quarkus:
+    log: # ALL > FINEST > FINER > FINE > CONFIG > INFO > WARNING > SEVERE > OFF
+      console:
+        async: true
+        color: true
+        enable: true
+        format: "%d{yyyy-MM-dd HH:mm:ss,SSS} |- %-5p in %c:%L{3.} [%t] - %s%e%n"
+      level: WARNING
+
+    resteasy:
+      path: /api
+
+    http:
+      port: 8081
+
+    datasource:
+      db-kind: postgresql
+      username: cadastro
+      password: cadastro
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/postgres
+
+    hibernate-orm:
+      dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      database:
+        generation: drop-and-create
+
+    swagger-ui:
+      always-include: true #Para deixar habilitado o swagger em producao (quando gerar o jar).
+      path: /swagger
+
+"%dev":
+  teste:
+    valor: wallace-dev
+  quarkus:
+    http:
+      port: 8081
+    datasource:
+      db-kind: postgresql
+      username: cadastro
+      password: cadastro
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/postgres
+
+    hibernate-orm:
+      database:
+        generation: drop-and-create
+
+    swagger-ui:
+      always-include: true
+      path: /test-swagger
+
+
+
+"%prod":
+  teste:
+    valor: wallace-local
+  quarkus:
+    http:
+      port: 8081
+    datasource:
+      db-kind: postgresql
+      username: cadastro
+      password: cadastro
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/postgres
+
+    hibernate-orm:
+      database:
+        generation: drop-and-create
+
+    swagger-ui:
+      always-include: true
+      path: /test-swagger

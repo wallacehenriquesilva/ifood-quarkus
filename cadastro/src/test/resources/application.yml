@@ -1,0 +1,24 @@
+"%test":
+  quarkus:
+    resteasy:
+      path: /api
+
+    http:
+      port: 0
+      test-port: 0
+
+    datasource:
+      db-kind: postgresql
+      username: cadastro
+      password: cadastro
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/postgres
+
+    hibernate-orm:
+      dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      database:
+        generation: drop-and-create
+
+    swagger-ui:
+      always-include: false #Para deixar habilitado o swagger em producao (quando gerar o jar).
+      path: /swagger

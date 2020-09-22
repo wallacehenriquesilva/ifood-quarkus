@@ -1,0 +1,11 @@
+restaurante:
+  - ID: 123
+    NOME: "Restaurante 1"
+    PROPRIETARIO: "Wallace"
+
+prato:
+  - ID: 123
+    NOME: "Prato 1"
+    DESCRICAO: "Primeiro prato do restaurante"
+    PRECO: 52.98
+    RESTAURANTE_ID: 123

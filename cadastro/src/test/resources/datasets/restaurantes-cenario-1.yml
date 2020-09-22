@@ -1,0 +1,7 @@
+restaurante:
+  - ID: 123
+    NOME: "Restaurante 1"
+    PROPRIETARIO: "Wallace"
+  - ID: 124
+    NOME: "Restaurante 2"
+    PROPRIETARIO: "Isabela"

@@ -1,0 +1,13 @@
+[
+  {
+    "descricao": "Primeiro prato do restaurante",
+    "id": 123,
+    "nome": "Prato 1",
+    "preco": 52.98,
+    "restaurante": {
+      "id": 123,
+      "nome": "Restaurante 1",
+      "proprietario": "Wallace"
+    }
+  }
+]
