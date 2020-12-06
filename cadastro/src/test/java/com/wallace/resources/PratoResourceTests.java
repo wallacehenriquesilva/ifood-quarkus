@@ -7,10 +7,15 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.wallace.configurations.CadastroLifeCycleManager;
 import com.wallace.resources.models.request.PratoRequest;
+import com.wallace.utils.TokenUtils;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.specification.RequestSpecification;
 import org.approvaltests.Approvals;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
@@ -25,6 +30,22 @@ import java.math.BigDecimal;
 class PratoResourceTests {
 
 
+    private String token; //Token que será utilizado pelas requisições
+
+    @BeforeEach
+    public void createToken() throws Exception {
+        //Cria o token utilizando o TokenUtils, e usando o arquivo JWTProprietarioClaims.json como token.
+        token = TokenUtils.generateTokenString("/JWTProprietarioClaims.json", null);
+    }
+
+
+    private RequestSpecification given() {
+        return RestAssured.given()
+                .header(new Header("Authorization", "Bearer " + token))
+                .contentType(ContentType.JSON);
+    }
+
+
     @Test
     @DataSet(value = "datasets/pratos-cenario-1.yml", cleanAfter = true)
     /**
@@ -33,7 +54,7 @@ class PratoResourceTests {
      *  Podemos usar também o @ExpectedDataSet() passando o arquivo do dataset esperado após as ações do teste.
      */
     void getAllPratos() {
-        final String result = RestAssured.given()
+        final String result = given()
                 .when().get("/api/v1/restaurantes/123/pratos")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
@@ -48,7 +69,7 @@ class PratoResourceTests {
     @ExpectedDataSet("datasets/responses/pratos-get-one.yml")
         //Valida de acordo com o dataset de retorno
     void getOneRestaurant() {
-        final String result = RestAssured.given()
+        final String result = given()
                 .when()
                 .get("/api/v1/restaurantes/123/pratos/123")
                 .then()
@@ -69,7 +90,7 @@ class PratoResourceTests {
                 new BigDecimal("100.11")
         );
 
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .body(pratoRequest)
@@ -90,7 +111,7 @@ class PratoResourceTests {
                 new BigDecimal("52.00")
         );
 
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .body(pratoRequest)
@@ -103,7 +124,7 @@ class PratoResourceTests {
     @DataSet(value = "datasets/pratos-cenario-1.yml", cleanAfter = true)
     @ExpectedDataSet("datasets/responses/pratos-delete.yml")
     void deletePrato() {
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .delete("/api/v1/restaurantes/123/pratos/123")

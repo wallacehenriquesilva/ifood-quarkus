@@ -1,4 +1,11 @@
 "%test":
+  mp:
+    jwt:
+      verify:
+        issuer: http://localhost:8180/auth/realms/ifood #Endereço do nosso realm, em quem confiamos para criar o token
+        publickey:
+          location: publicKey.pem #Arquivo de chave publica para a geração de tokens para os testes
+
   quarkus:
     resteasy:
       path: /api

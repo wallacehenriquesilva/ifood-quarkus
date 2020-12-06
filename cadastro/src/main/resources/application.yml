@@ -3,7 +3,8 @@
     jwt:
       verify:
         issuer: http://localhost:8180/auth/realms/ifood #Endereço do nosso realm, em quem confiamos para criar o token
-        publickey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/XweeH4wTNuBQqpD/BqeuuNHTLrC3lCrgp2DXBoKPwahj+uuR5XI0Thb2jViMs4ZsNYtuaGgfBHTwUKTlstaGDwcJeUmwrDveiz29QO2XSjls8ILj4qqAIj861ZyLpz7u7g+4WBROxdTiC6ia0x3le8SSXVvRHRHz7Qd0EGeMUYW6PfpHV3NeUzVa2AWrLQScS9xyMvd+Djj0YGAjE7pM1MlpmEm8fG3gvPyVCyyGOw+l1PQt0SWBWjEXX88d31rUf+kijNLfKfLVbOJmbUpIIWMIjRmwWU6IT8xEaitc7HO7+3GLP8JBgyfn7ONzBB/XDsRxZkUmM0JDO4DmJ53QIDAQAB #Chave publica do healm
+        #Chave publica do healm, da para pegar acessando o link do healm
+        publickey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl7N3wbtv7ta7B8FfXVkAigAj1vPX3LE/v87MPNgMqtC3AEwxKGpyfODuQJhntyQCrNQ34BiJ0GTv/1Aygl0MKK1e5xSgOjFmtPVBcOZFH9rE35Yh+E6/HkIyUyber0+zAaRZ0Nq4f31wNrd3nt9Rm9LLjl/C/mEXsY4igbjt85nGostbeQuZ6DMseKrW4laPe/6AB47Mz1KuHYGfTAvZa2juPCw/nqHYFehGpVT9+W/GJgbVig9kyg+y99IqgvzT/7znPclkxPB89BpaR1yNuZ2MdevZcmUdwLBGu22vH5NV4f/cHDXk4tqZFouYsV2M9Gb7LA4yJkoG5qUhB6/UUwIDAQAB
 
   quarkus:
     log: # ALL > FINEST > FINER > FINE > CONFIG > INFO > WARNING > SEVERE > OFF
@@ -16,6 +17,9 @@
 
     resteasy:
       path: /api
+#      role:
+#        based:
+#          security: true
 
     http:
       port: 8081

@@ -7,10 +7,15 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.wallace.configurations.CadastroLifeCycleManager;
 import com.wallace.resources.models.request.LocalizacaoRequest;
 import com.wallace.resources.models.request.RestauranteRequest;
+import com.wallace.utils.TokenUtils;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.specification.RequestSpecification;
 import org.approvaltests.Approvals;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
@@ -23,6 +28,21 @@ import javax.ws.rs.core.Response;
         //Chama o lifecycle para subir o container do testsContainers
 class RestauranteResourceTests {
 
+    private String token; //Token que será utilizado pelas requisições
+
+    @BeforeEach
+    public void createToken() throws Exception {
+        //Cria o token utilizando o TokenUtils, e usando o arquivo JWTProprietarioClaims.json como token.
+        token = TokenUtils.generateTokenString("/JWTProprietarioClaims.json", null);
+    }
+
+
+    private RequestSpecification given() {
+        return RestAssured.given()
+                .header(new Header("Authorization", "Bearer " + token))
+                .contentType(ContentType.JSON);
+    }
+
 
     //TODO -> O CONTAINER SOBE NORMAL
     @Test
@@ -33,7 +53,7 @@ class RestauranteResourceTests {
      *  Podemos usar também o @ExpectedDataSet() passando o arquivo do dataset esperado após as ações do teste.
      */
     void getAllRestaurants() {
-        final String result = RestAssured.given()
+        final String result = given()
                 .when().get("/api/v1/restaurantes")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
@@ -46,7 +66,7 @@ class RestauranteResourceTests {
     @Test
     @DataSet(value = "datasets/restaurantes-cenario-1.yml", cleanAfter = true)
     void getOneRestaurant() {
-        final String result = RestAssured.given()
+        final String result = given()
                 .when()
                 .get("/api/v1/restaurantes/123")
                 .then()
@@ -71,7 +91,7 @@ class RestauranteResourceTests {
                 localizacaoRequest
         );
 
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .body(restauranteRequest)
@@ -96,7 +116,7 @@ class RestauranteResourceTests {
                 localizacaoRequest
         );
 
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .body(restauranteRequest)
@@ -108,7 +128,7 @@ class RestauranteResourceTests {
     @Test
     @DataSet(value = "datasets/restaurantes-cenario-1.yml", cleanAfter = true)
     void deleteRestaurant() {
-        RestAssured.given()
+        given()
                 .when()
                 .header("Content-Type", "application/json")
                 .delete("/api/v1/restaurantes/123")
