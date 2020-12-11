@@ -6,6 +6,7 @@ import com.wallace.entities.mappers.RestauranteMapper;
 import com.wallace.exceptions.RestaurantNotFoundException;
 import com.wallace.resources.RestauranteResource;
 import com.wallace.resources.models.request.RestauranteRequest;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@Traced //Colocamos essa annotation para que a classe e seus métodos também contem no trace, seu tempo de execução, operacao, etc.
 @ApplicationScoped
 public class RestauranteService {
 
@@ -25,6 +27,7 @@ public class RestauranteService {
         this.localizacaoMapper = localizacaoMapper;
     }
 
+    @Traced(operationName = "Buscando todos os restaurantes")
     public List<RestauranteEntity> getAll() {
         return RestauranteEntity.listAll();
     }

@@ -20,6 +20,11 @@
 #      role:
 #        based:
 #          security: true
+    jaeger:
+      service-name: ifood-cadastro
+      sampler-type: const
+      sampler-param: 1
+      endpoint: http://localhost:14268/api/traces
 
     http:
       port: 8081
@@ -29,7 +34,9 @@
       username: cadastro
       password: cadastro
       jdbc:
-        url: jdbc:postgresql://localhost:5432/postgres
+#        url: jdbc:postgresql://localhost:5432/postgres
+        url: jdbc:tracing:postgresql://localhost:5432/postgres #Para ultilizarmos o openTracing, precisamos adicionar :tracing: antes do banco de dados na url.
+        driver: io.opentracing.contrib.jdbc.TracingDriver #Driver utilizado para que o OpenTracing pegue as queries
 
     hibernate-orm:
       dialect: org.hibernate.dialect.PostgreSQL10Dialect
